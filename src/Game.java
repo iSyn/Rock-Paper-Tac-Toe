@@ -1,10 +1,9 @@
-import processing.core.PApplet;
-import processing.core.PFont;
-
 public class Game {
 
-    public static void game(String[] args) {
+    // Scenes
+    private int scene = 0;
 
-    }
+    public int getScene() { return scene; }
+    public void setScene(int num) { scene = num; }
 
 }
