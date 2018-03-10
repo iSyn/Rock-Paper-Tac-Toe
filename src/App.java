@@ -1,6 +1,8 @@
 import processing.core.PApplet;
 import processing.core.PFont;
 
+import static java.lang.Thread.sleep;
+
 public class App extends PApplet{
 
     PFont font;
@@ -77,6 +79,21 @@ public class App extends PApplet{
                 posX += 220;
             }
         } else if (currentScene == 2) {// RPS RESULTS
+            background(88, 75, 83);
+            noStroke();
+            fill(252);
+            textFont(font, 50);
+            text("Player 1 Chose: " + rps.getSelectedString(), 30, 70);
+            text("Computer Chose: " + rps.getComputerSelectedString(), 30, 130);
+//            rect(30, 30, 250, 440);
+//            fill(25, 100, 126);
+//            textFont(font, 50);
+//            text(rps.getChoices()[rps.getSelected()], 70, 250);
+//            fill(252);
+//            rect(420, 30, 250, 440);
+//            fill(237, 106, 90);
+//            textFont(font, 190);
+//            text("VS", 250, 240);
 
         }
     }
@@ -103,6 +120,7 @@ public class App extends PApplet{
                     rps.changeSelected(1);
                 }
             } else if (key == ' ' || key == ENTER || key == RETURN) {
+                rps.play();
                 game.setScene(2);
             }
         }
