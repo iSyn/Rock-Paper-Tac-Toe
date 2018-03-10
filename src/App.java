@@ -9,6 +9,7 @@ public class App extends PApplet{
     Game game = new Game();
     MainMenu menu = new MainMenu();
     RPS rps = new RPS();
+    TTT ttt = new TTT();
 
     public static void main(String[] args) {
         PApplet.main("App", args);
@@ -85,16 +86,40 @@ public class App extends PApplet{
             textFont(font, 50);
             text("Player 1 Chose: " + rps.getSelectedString(), 30, 70);
             text("Computer Chose: " + rps.getComputerSelectedString(), 30, 130);
-//            rect(30, 30, 250, 440);
-//            fill(25, 100, 126);
-//            textFont(font, 50);
-//            text(rps.getChoices()[rps.getSelected()], 70, 250);
-//            fill(252);
-//            rect(420, 30, 250, 440);
-//            fill(237, 106, 90);
-//            textFont(font, 190);
-//            text("VS", 250, 240);
+        } else if (currentScene == 3) { // TIC TAC TOE
+            background(252, 244, 217);
+            int[][] board = ttt.getBoard();
+            int selectedRow = ttt.getRow();
+            int selectedColumn = ttt.getColumn();
 
+            noFill();
+            stroke(0);
+            int yPos = 100;
+
+            for (int col = 0; col < board.length; col++) {
+                int xPos = 190;
+                for (int row = 0; row < board[col].length; row++) {
+                    strokeWeight(4);
+                    stroke(70, 32, 102);
+                    rect(xPos, yPos, 100, 100);
+
+                    if (col == selectedColumn && row == selectedRow) {
+                        stroke(237, 119, 87);
+                        rect(xPos + 5, yPos + 5, 90, 90);
+                    }
+
+                    if (board[col][row] != 0) {
+                        if (board[col][row] == 1) {
+                            line(xPos + 15, yPos + 15, xPos + 85, yPos + 85);
+                            line(xPos + 85, yPos + 15, xPos + 15, yPos + 85);
+                        }
+                    }
+
+
+                    xPos += 100;
+                }
+                yPos += 100;
+            }
         }
     }
 
@@ -122,6 +147,22 @@ public class App extends PApplet{
             } else if (key == ' ' || key == ENTER || key == RETURN) {
                 rps.play();
                 game.setScene(2);
+            }
+        } else if (currentScene == 2) {
+            if (key == ' ' || key == ENTER || key == RETURN) {
+                game.setScene(3);
+            }
+        } else if (currentScene == 3) {
+            if (key == CODED) {
+                if (keyCode == LEFT) {
+                    ttt.setRow(-1);
+                } else if (keyCode == RIGHT) {
+                    ttt.setRow(1);
+                } else if (keyCode == UP) {
+                    ttt.setColumn(-1);
+                } else if (keyCode == DOWN) {
+                    ttt.setColumn(1);
+                }
             }
         }
 
