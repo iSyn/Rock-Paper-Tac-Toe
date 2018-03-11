@@ -216,7 +216,7 @@ public class App extends PApplet{
                 }
             } else if (key == ' ' || key == ENTER || key == RETURN) {
                 if (menu.getSelected() == 0) {
-                    game = new Game();
+//                    game = new Game();
                     rps = new RPS();
                     ttt = new TTT();
                     game.setScene(1);
