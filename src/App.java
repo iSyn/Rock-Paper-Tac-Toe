@@ -1,6 +1,8 @@
 import processing.core.PApplet;
 import processing.core.PFont;
 
+import java.util.Arrays;
+
 import static java.lang.Thread.sleep;
 
 public class App extends PApplet{
@@ -29,7 +31,7 @@ public class App extends PApplet{
     public void draw() {
         int currentScene = game.getScene();
 
-        if (currentScene == 0) { // MAIN MENU
+        if (currentScene == 0) { //************************************************************************************ MAIN MENU
             background(43, 45, 66);
             fill(46, 196, 182);
             textFont(font, 100);
@@ -51,7 +53,7 @@ public class App extends PApplet{
                 text(menu.getButtons()[i], posX, posY);
                 posY += 70;
             }
-        } else if (currentScene == 1) { // RPS
+        } else if (currentScene == 1) { //****************************************************************************** RPS
             background(250, 121, 33);
             fill(253, 231, 76);
             textFont(font, 80);
@@ -79,14 +81,14 @@ public class App extends PApplet{
                 }
                 posX += 220;
             }
-        } else if (currentScene == 2) {// RPS RESULTS
+        } else if (currentScene == 2) { //***************************************************************************** RPS RESULTS
             background(88, 75, 83);
             noStroke();
             fill(252);
             textFont(font, 50);
             text("Player 1 Chose: " + rps.getSelectedString(), 30, 70);
             text("Computer Chose: " + rps.getComputerSelectedString(), 30, 130);
-        } else if (currentScene == 3) { // TIC TAC TOE
+        } else if (currentScene == 3) { //***************************************************************************** TIC TAC TOE
             background(252, 244, 217);
             int[][] board = ttt.getBoard();
             int selectedRow = ttt.getRow();
@@ -99,34 +101,54 @@ public class App extends PApplet{
             for (int col = 0; col < board.length; col++) {
                 int xPos = 190;
                 for (int row = 0; row < board[col].length; row++) {
-                    strokeWeight(4);
+                    strokeWeight(6);
                     stroke(70, 32, 102);
                     rect(xPos, yPos, 100, 100);
 
-                    if (col == selectedColumn && row == selectedRow) {
-                        stroke(237, 119, 87);
-                        rect(xPos + 5, yPos + 5, 90, 90);
-                    }
-
-                    if (board[col][row] != 0) {
-                        if (board[col][row] == 1) {
-                            line(xPos + 15, yPos + 15, xPos + 85, yPos + 85);
-                            line(xPos + 85, yPos + 15, xPos + 15, yPos + 85);
+                    // DRAW SELECTED COL
+                    if (rps.getWinner() == 1) {
+                        if (col == selectedColumn && row == selectedRow) {
+                            stroke(237, 119, 87);
+                            rect(xPos + 5, yPos + 5, 90, 90);
+                        }
+                    } else {
+                        int[] xy = ttt.getComputerSelected();
+                        if (col == xy[0] && row == xy[1]) {
+                            stroke(80, 171, 160);
+                            rect(xPos + 5, yPos + 5, 90, 90);
                         }
                     }
-
+                    // DRAW X's AND O's
+                    if (board[col][row] != 0) {
+                        if (board[col][row] == 1) {
+                            stroke(237, 119, 87);
+                            line(xPos + 15, yPos + 15, xPos + 85, yPos + 85);
+                            line(xPos + 85, yPos + 15, xPos + 15, yPos + 85);
+                        } else {
+                            stroke(80, 171, 160);
+                            ellipse(xPos + 50, yPos + 50, 80, 80);
+                        }
+                    }
 
                     xPos += 100;
                 }
                 yPos += 100;
             }
+        } else if (currentScene == 4) { //***************************************************************************** GAME OVER SCREEN
+            background(70, 32, 102);
+
+            fill(252, 244, 217);
+            textAlign(CENTER);
+            text(game.getWinnerString() + " Wins!", 350, 100);
+            rectMode(CENTER);
+            rect(350, 250, 500, 300);
         }
     }
 
     public void keyPressed() {
         int currentScene = game.getScene();
 
-        if (currentScene == 0) {
+        if (currentScene == 0) { //************************************************************************************* MENU SCENE
             if (key == CODED) {
                 if (keyCode == UP) {
                     menu.changeSelected(1);
@@ -137,7 +159,7 @@ public class App extends PApplet{
                 if (menu.getSelected() == 0) { game.setScene(1); }
                 else { exit(); }
             }
-        } else if (currentScene == 1) {
+        } else if (currentScene == 1) { //***************************************************************************** RPS SCENE
             if (key == CODED) {
                 if (keyCode == LEFT) {
                     rps.changeSelected(-1);
@@ -148,20 +170,47 @@ public class App extends PApplet{
                 rps.play();
                 game.setScene(2);
             }
-        } else if (currentScene == 2) {
+        } else if (currentScene == 2) { //***************************************************************************** RPS RESULTS SCENE
             if (key == ' ' || key == ENTER || key == RETURN) {
-                game.setScene(3);
+                if (rps.getWinner() == 0) {
+                    game.setScene(1);
+                } else {
+                    if (rps.getWinner() == 2) {
+                        ttt.getRandomOpenSpace();
+                        ttt.enterMove(2);
+                    }
+                    game.setScene(3);
+                }
             }
-        } else if (currentScene == 3) {
-            if (key == CODED) {
-                if (keyCode == LEFT) {
-                    ttt.setRow(-1);
-                } else if (keyCode == RIGHT) {
-                    ttt.setRow(1);
-                } else if (keyCode == UP) {
-                    ttt.setColumn(-1);
-                } else if (keyCode == DOWN) {
-                    ttt.setColumn(1);
+        } else if (currentScene == 3) { //***************************************************************************** TTT SCENE
+            if (rps.getWinner() == 1) { // if player won TTT
+                if (key == CODED) {
+                    if (keyCode == LEFT) {
+                        ttt.setRow(-1);
+                    } else if (keyCode == RIGHT) {
+                        ttt.setRow(1);
+                    } else if (keyCode == UP) {
+                        ttt.setColumn(-1);
+                    } else if (keyCode == DOWN) {
+                        ttt.setColumn(1);
+                    }
+                } else if (key == ' ' || key == ENTER || key == RETURN) {
+                    if (ttt.getBoard()[ttt.getColumn()][ttt.getRow()] == 0) {
+                        ttt.enterMove(1);
+                        if (ttt.checkBoard(1) == 1) {
+                            game.gameOver(1);
+                        } else {
+                            game.setScene(1);
+                        }
+                    }
+                }
+            } else {
+                if (key == ' ' || key == ENTER || key == RETURN) {
+                    if (ttt.checkBoard(2) == 2) {
+                        game.gameOver(2);
+                    } else {
+                        game.setScene(1);
+                    }
                 }
             }
         }
