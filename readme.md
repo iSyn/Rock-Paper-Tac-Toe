@@ -8,21 +8,21 @@
 
 ---
 
-##### How to Play:
+#### How to Play:
 
 First you play rock paper scissors. Winner gets to make a move on a tic tac toe board.
 First person to win at tic tac toe wins the game!
 
 ---
 
-##### Technologies Used:
+#### Technologies Used:
 
 1. My big brain
 2. and also Java & Processing
 
 ---
 
-##### Things to Add:
+#### Things to Add:
 
 1. 2 player option
 2. Online 1v1
