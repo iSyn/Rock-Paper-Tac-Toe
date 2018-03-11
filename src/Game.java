@@ -31,11 +31,6 @@ public class Game {
         setScene(4);
     }
 
-//    public LinkedList<Integer> getHistory() {
-//        Integer[] newHistory = history.toArray(new Integer[history.size()]);
-//        return history;
-//    }
-
 
     public Integer[] getHistory() {
         Integer[] newHistory = history.toArray(new Integer[history.size()]);

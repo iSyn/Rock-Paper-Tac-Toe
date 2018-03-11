@@ -8,11 +8,11 @@ import static java.lang.Thread.sleep;
 
 public class App extends PApplet{
 
-    PFont font;
-    Game game = new Game();
-    MainMenu menu = new MainMenu();
-    RPS rps = new RPS();
-    TTT ttt = new TTT();
+    private PFont font;
+    private Game game = new Game();
+    private MainMenu menu = new MainMenu();
+    private RPS rps = new RPS();
+    private TTT ttt = new TTT();
 
     public static void main(String[] args) {
         PApplet.main("App", args);
@@ -43,6 +43,11 @@ public class App extends PApplet{
             text("ROCK PAPER", 680, 90);
             text("TAC TOE",  680, 180);
 
+            textAlign(RIGHT);
+            textFont(font, 15);
+            fill(252, 244, 217);
+            text("Made by Synclair Wang", 680, 480);
+
             int posX = 80;
             int posY = 380;
             for (int i = 0; i < menu.getButtons().length; i++) {
@@ -58,10 +63,11 @@ public class App extends PApplet{
                 posY += 70;
             }
         } else if (currentScene == 1) { //****************************************************************************** RPS
-            background(250, 121, 33);
-            fill(253, 231, 76);
-            textFont(font, 80);
-            text("PICK ONE", 170, 100);
+            background(252, 244, 217);
+            fill(70, 32, 102);
+            textFont(font, 60);
+            textAlign(CENTER);
+            text("PICK YOUR WEAPON", 350, 100);
             strokeWeight(5);
             stroke(253, 231, 76);
             line(0, 140, 700, 140);
@@ -71,7 +77,7 @@ public class App extends PApplet{
             for (int i = 0; i < rps.getChoices().length; i++) {
 
                 noStroke();
-                fill(155, 197, 61);
+                fill(237, 119, 87);
                 rect(posX, posY, 190, 190);
                 textFont(font, 30);
                 fill(0);
@@ -79,8 +85,8 @@ public class App extends PApplet{
 
                 if (i == rps.getSelected()) {
                     noFill();
-                    strokeWeight(5);
-                    stroke(0);
+                    strokeWeight(7);
+                    stroke(70, 32, 102);
                     rect(posX - 5, posY - 5, 200, 200);
                 }
                 posX += 220;
@@ -214,7 +220,7 @@ public class App extends PApplet{
                 }
             }
         } else if (currentScene == 3) { //***************************************************************************** TTT SCENE
-            if (rps.getWinner() == 1) { // if player won TTT
+            if (rps.getWinner() == 1) { // if player won RPS
                 if (key == CODED) {
                     if (keyCode == LEFT) {
                         ttt.setRow(-1);
@@ -231,7 +237,11 @@ public class App extends PApplet{
                         if (ttt.checkBoard(1) == 1) {
                             game.gameOver(1);
                         } else {
-                            game.setScene(1);
+                            if (ttt.getTurn() == 9) {
+                                game.gameOver(0);
+                            } else {
+                                game.setScene(1);
+                            }
                         }
                     }
                 }
@@ -240,7 +250,11 @@ public class App extends PApplet{
                     if (ttt.checkBoard(2) == 2) {
                         game.gameOver(2);
                     } else {
-                        game.setScene(1);
+                        if (ttt.getTurn() == 9) {
+                            game.gameOver(0);
+                        } else {
+                            game.setScene(1);
+                        }
                     }
                 }
             }

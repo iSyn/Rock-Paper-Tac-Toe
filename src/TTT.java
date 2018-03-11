@@ -9,6 +9,7 @@ public class TTT {
     private int[][] board = {row1, row2, row3};
     private int winner;
     private LinkedList<Integer> history = new LinkedList<>();
+    private int turn = 0;
 
     private int selectedColumn = 0;
     private int selectedRow = 0;
@@ -21,14 +22,12 @@ public class TTT {
         selectedColumn += num;
         if (selectedColumn == -1) { selectedColumn = 2; }
         if (selectedColumn == 3) { selectedColumn = 0; }
-        System.out.println(selectedRow + ", " + selectedColumn + " VALUE: " + board[selectedColumn][selectedRow]);
         printBoard();
     }
     public void setRow(int num) {
         selectedRow += num;
         if (selectedRow == -1) { selectedRow = 2; }
         if (selectedRow == 3) { selectedRow = 0; }
-        System.out.println(selectedRow + ", " + selectedColumn + " VALUE: " + board[selectedColumn][selectedRow]);
         printBoard();
     }
 
@@ -72,7 +71,12 @@ public class TTT {
             board[computerSelected[0]][computerSelected[1]] = 2;
             System.out.println("ENTERING VALUE " + player + " INTO " + computerSelected[0] + ", " + computerSelected[1]);
         }
+        turn++;
         printBoard();
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public void printBoard() {
