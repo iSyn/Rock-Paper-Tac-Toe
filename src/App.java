@@ -2,6 +2,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static java.lang.Thread.sleep;
 
@@ -32,8 +33,11 @@ public class App extends PApplet{
         int currentScene = game.getScene();
 
         if (currentScene == 0) { //************************************************************************************ MAIN MENU
-            background(43, 45, 66);
-            fill(46, 196, 182);
+            rectMode(CORNER);
+            background(70, 32, 102);
+            fill(237, 119, 87);
+            rect(0, 0, 350, 700);
+            fill(252, 244, 217);
             textFont(font, 100);
             textAlign(RIGHT);
             text("ROCK PAPER", 680, 90);
@@ -44,11 +48,11 @@ public class App extends PApplet{
             for (int i = 0; i < menu.getButtons().length; i++) {
                 textFont(font, 70);
                 if (i == menu.getSelected()) {
-                    fill(239, 35, 60);
+                    fill(142, 210, 201);
                     textAlign(LEFT);
                     text(">", posX - 50, posY);
                 }
-                fill(237, 242, 244);
+                fill(252, 244, 217);
                 textAlign(LEFT);
                 text(menu.getButtons()[i], posX, posY);
                 posY += 70;
@@ -136,17 +140,44 @@ public class App extends PApplet{
             }
         } else if (currentScene == 4) { //***************************************************************************** GAME OVER SCREEN
             background(70, 32, 102);
-
+            stroke(237, 119, 87);
+            strokeWeight(6);
             fill(252, 244, 217);
             textAlign(CENTER);
+            textFont(font, 70);
             text(game.getWinnerString() + " Wins!", 350, 100);
+            rectMode(CORNER);
+            rect(100, 150, 500, 600);
             rectMode(CENTER);
-            rect(350, 250, 500, 300);
+            Integer[] history = game.getHistory();
+
+            int posY = 210;
+
+            for (int scores = 1; scores <= history.length; scores++) {
+                textAlign(LEFT);
+                fill(244, 241, 187);
+                rect(350, posY, 450, 70);
+                textFont(font, 30);
+                fill(70, 32, 102);
+                text("Game " + scores + ": " + game.getSpecificWin(scores-1),150, posY + 10);
+                posY += 85;
+            }
+
         }
     }
 
     public void keyPressed() {
         int currentScene = game.getScene();
+
+        if (key == '=') {
+            game.gameOver(1);
+        }
+        if (key == '-') {
+            game.gameOver(2);
+        }
+        if (key == '0') {
+            game.gameOver(0);
+        }
 
         if (currentScene == 0) { //************************************************************************************* MENU SCENE
             if (key == CODED) {
@@ -213,7 +244,10 @@ public class App extends PApplet{
                     }
                 }
             }
+        } else if (currentScene == 4) { //***************************************************************************** GAME OVER SCENE
+            if (key == ' ' || key == RETURN || key == ENTER) {
+                game.setScene(0);
+            }
         }
-
     }
 }
