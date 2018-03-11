@@ -40,9 +40,9 @@ public class RPS {
     public String getComputerSelectedString() { return choices[computerSelected]; }
     public int getWinner() { return winner; }
     public String getWinnerString() {
-        if (winner == 0) { return "Tie"; }
-        if (winner == 1) { return "Win"; }
-        if (winner == 2) { return "Lose"; }
+        if (winner == 0) { return "NO ONE"; }
+        if (winner == 1) { return "PLAYER"; }
+        if (winner == 2) { return "COMPUTER"; }
 
         return null;
     }

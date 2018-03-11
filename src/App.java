@@ -63,42 +63,64 @@ public class App extends PApplet{
                 posY += 70;
             }
         } else if (currentScene == 1) { //****************************************************************************** RPS
+            rectMode(CORNER);
             background(252, 244, 217);
             fill(70, 32, 102);
-            textFont(font, 60);
+            textFont(font, 50);
             textAlign(CENTER);
-            text("PICK YOUR WEAPON", 350, 100);
+            text("CHOOSE YOUR", 350, 80);
+            textFont(font, 140);
+            text("WEAPON", 350, 210);
             strokeWeight(5);
             stroke(253, 231, 76);
-            line(0, 140, 700, 140);
             noStroke();
             int posX = 35;
-            int posY = 220;
+            int posY = 270;
             for (int i = 0; i < rps.getChoices().length; i++) {
 
                 noStroke();
-                fill(237, 119, 87);
+                fill(70, 32, 102);
                 rect(posX, posY, 190, 190);
-                textFont(font, 30);
-                fill(0);
-                text(rps.getChoices()[i], posX + 50, posY + 100);
+                textFont(font, 50);
+                fill(252, 244, 217);
+                textAlign(CENTER);
+                text(rps.getChoices()[i], posX + 95, posY + 105);
 
                 if (i == rps.getSelected()) {
                     noFill();
-                    strokeWeight(7);
-                    stroke(70, 32, 102);
+                    strokeWeight(11);
+                    stroke(221, 47, 0);
                     rect(posX - 5, posY - 5, 200, 200);
                 }
                 posX += 220;
             }
         } else if (currentScene == 2) { //***************************************************************************** RPS RESULTS
-            background(88, 75, 83);
+            textAlign(LEFT);
+            background(70, 32, 102);
             noStroke();
-            fill(252);
+            fill(252, 244, 217);
             textFont(font, 50);
-            text("Player 1 Chose: " + rps.getSelectedString(), 30, 70);
-            text("Computer Chose: " + rps.getComputerSelectedString(), 30, 130);
+            textAlign(LEFT);
+            text("Player Chose: " + rps.getSelectedString(), 30, 70);
+            textAlign(RIGHT);
+            text("Computer Chose: " + rps.getComputerSelectedString(), 670, 130);
+
+            rectMode(CENTER);
+            rect(350, 330, 650, 290);
+
+            textAlign(CENTER);
+            textFont(font, 110);
+            fill(70, 32, 102);
+            if (rps.getWinner() == 1) { fill(237, 119, 87); }
+            if (rps.getWinner() == 2) { fill(80, 171, 160); }
+            text(rps.getWinnerString() + "", 350, 350);
+            textFont(font, 40);
+            text("WINS", 350, 400);
+
+
+
         } else if (currentScene == 3) { //***************************************************************************** TIC TAC TOE
+            rectMode(CORNER);
             background(252, 244, 217);
             int[][] board = ttt.getBoard();
             int selectedRow = ttt.getRow();
@@ -193,7 +215,12 @@ public class App extends PApplet{
                     menu.changeSelected(-1);
                 }
             } else if (key == ' ' || key == ENTER || key == RETURN) {
-                if (menu.getSelected() == 0) { game.setScene(1); }
+                if (menu.getSelected() == 0) {
+                    game = new Game();
+                    rps = new RPS();
+                    ttt = new TTT();
+                    game.setScene(1);
+                }
                 else { exit(); }
             }
         } else if (currentScene == 1) { //***************************************************************************** RPS SCENE
