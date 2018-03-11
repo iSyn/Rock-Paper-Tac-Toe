@@ -1,4 +1,4 @@
-# Rock Paper Tac Toe
+# ✊✋✌ Rock Paper Tac Toe
 
 ![rock paper scissor gif](https://media3.giphy.com/media/3oriNKQe0D6uQVjcIM/200w.webp)
 ![gif2](https://media0.giphy.com/media/3ohzdGnD5vAud1NCZW/giphy.gif)
