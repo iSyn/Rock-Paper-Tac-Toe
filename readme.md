@@ -18,7 +18,7 @@ First person to win at tic tac toe wins the game!
 #### Technologies Used:
 
 1. My big brain
-2. and also Java & Processing
+2. and also Java & Processing 
 
 ---
 
